@@ -1,4 +1,4 @@
-from analyze_log import verify_orders
+from analyze_log import verify_days, verify_orders
 
 
 class TrackOrders:
@@ -38,7 +38,14 @@ class TrackOrders:
         return orders.difference(orders_by_customer)
 
     def get_days_never_visited_per_customer(self, customer):
-        pass
+        days = verify_days(self._data)
+        customer_days = set()
+        for order in self._data:
+            if order["cliente"] == customer:
+                if order["dia"] not in customer_days:
+                    customer_days.add(order["dia"])
+
+        return days.difference(customer_days)
 
     def get_busiest_day(self):
         pass
