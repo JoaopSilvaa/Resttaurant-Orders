@@ -14,7 +14,15 @@ class TrackOrders:
         self._data.append(orderByClient)
 
     def get_most_ordered_dish_per_customer(self, customer):
-        pass
+        orders_by_customer = dict()
+        for order in self._data:
+            if order["cliente"] == customer:
+                if order["pedido"] not in orders_by_customer:
+                    orders_by_customer[order["pedido"]] = 1
+                else:
+                    orders_by_customer[order["pedido"]] += 1
+
+        return max(orders_by_customer, key=orders_by_customer.get)
 
     def get_never_ordered_per_customer(self, customer):
         pass
