@@ -1,4 +1,4 @@
-from analyze_log import verify_days, verify_orders
+from .analyze_log import verify_days, verify_orders
 
 
 class TrackOrders:
