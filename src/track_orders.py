@@ -1,3 +1,6 @@
+from analyze_log import verify_orders
+
+
 class TrackOrders:
     def __init__(self):
         self._data = []
@@ -25,7 +28,14 @@ class TrackOrders:
         return max(orders_by_customer, key=orders_by_customer.get)
 
     def get_never_ordered_per_customer(self, customer):
-        pass
+        orders = verify_orders(self._data)
+        orders_by_customer = set()
+        for order in self._data:
+            if order["cliente"] == customer:
+                if order["pedido"] not in orders_by_customer:
+                    orders_by_customer.add(order["pedido"])
+
+        return orders.difference(orders_by_customer)
 
     def get_days_never_visited_per_customer(self, customer):
         pass
