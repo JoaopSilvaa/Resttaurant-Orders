@@ -27,48 +27,50 @@ class InventoryControl:
         }
 
     def add_new_order(self, customer, order, day):
-        if order == "hamburguer":
-            if (
-                self._data["pao"] < 50 and
-                self._data["carne"] < 50 and
-                self._data["queijo"] < 100
-            ):
-                self._data["pao"] += 1
-                self._data["carne"] += 1
-                self._data["queijo"] += 1
-            else:
-                return False
-        elif order == "pizza":
-            if (
-                self._data["massa"] < 50 and
-                self._data["molho"] < 50 and
-                self._data["queijo"] < 100
-            ):
-                self._data["massa"] += 1
-                self._data["queijo"] += 1
-                self._data["molho"] += 1
-            else:
-                return False
-        elif order == "misto-quente":
-            if (
-                self._data["pao"] < 50 and
-                self._data["presunto"] < 50 and
-                self._data["queijo"] < 100
-            ):
-                self._data["pao"] += 1
-                self._data["presunto"] += 1
-                self._data["queijo"] += 1
-            else:
-                return False
-        elif order == "coxinha":
-            if (
-                self._data["massa"] < 50 and
-                self._data["frango"] < 50
-            ):
-                self._data["massa"] += 1
-                self._data["frango"] += 1
-            else:
-                return False
+        if order in self.get_available_dishes() and order == "hamburguer":
+            self._data["pao"] += 1
+            self._data["carne"] += 1
+            self._data["queijo"] += 1
+        elif order in self.get_available_dishes() and order == "pizza":
+            self._data["massa"] += 1
+            self._data["queijo"] += 1
+            self._data["molho"] += 1
+        elif order in self.get_available_dishes() and order == "misto-quente":
+            self._data["pao"] += 1
+            self._data["presunto"] += 1
+            self._data["queijo"] += 1
+        elif order in self.get_available_dishes() and order == "coxinha":
+            self._data["massa"] += 1
+            self._data["frango"] += 1
+        else:
+            return False
 
     def get_quantities_to_buy(self):
         return self._data
+
+    def get_available_dishes(self):
+        dishes = set()
+        if (
+                self._data["pao"] < 50 and
+                self._data["carne"] < 50 and
+                self._data["queijo"] < 100
+        ):
+            dishes.add("hamburguer")
+        if (
+                self._data["massa"] < 50 and
+                self._data["molho"] < 50 and
+                self._data["queijo"] < 100
+        ):
+            dishes.add("pizza")
+        if (
+                self._data["pao"] < 50 and
+                self._data["presunto"] < 50 and
+                self._data["queijo"] < 100
+        ):
+            dishes.add("misto-quente")
+        if (
+                self._data["massa"] < 50 and
+                self._data["frango"] < 50
+        ):
+            dishes.add("coxinha")
+        return dishes
